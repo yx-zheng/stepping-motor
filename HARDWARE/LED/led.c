@@ -15,12 +15,12 @@
 
 //初始化PB5和PE5为输出口.并使能这两个口的时钟		    
 //LED IO初始化
-void LED_Init(void)
+void IO_Init(void)
 {
  
  GPIO_InitTypeDef  GPIO_InitStructure;
  	
- RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA|RCC_APB2Periph_GPIOD, ENABLE);	 //使能PA,PD端口时钟
+ RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA|RCC_APB2Periph_GPIOD|RCC_APB2Periph_GPIOB, ENABLE);	 //使能PA,PD,PB端口时钟
 	
  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8;				 //LED0-->PA.8 端口配置
  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 		 //开漏输出/tuiwan PP
@@ -30,6 +30,10 @@ void LED_Init(void)
 
  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;	    		 //LED1-->PD.2 端口配置, 推挽输出
  GPIO_Init(GPIOD, &GPIO_InitStructure);	  				 //推挽输出 ，IO口速度为50MHz
- GPIO_SetBits(GPIOD,GPIO_Pin_2); 						 //PD.2 输出高 
+ GPIO_WriteBit(GPIOD,GPIO_Pin_2,Bit_RESET); 						 //PD.2 =0 
+	
+ GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;	    		 //LED1-->PD.2 端口配置, 推挽输出
+ GPIO_Init(GPIOB, &GPIO_InitStructure);	  				 //推挽输出 ，IO口速度为50MHz
+ GPIO_WriteBit(GPIOB,GPIO_Pin_0,Bit_RESET); 						 //PB.0 Bit_RESET = 0,  Bit_SET = 1
 }
  
